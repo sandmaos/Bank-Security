@@ -1,0 +1,40 @@
+plugins {
+  id 'java'
+  id 'application'
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+mainClassName = 'comp3911.cwk2.AppServer'
+
+defaultTasks 'run'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation 'org.xerial:sqlite-jdbc:3.28.0'
+  implementation 'org.freemarker:freemarker:2.3.29'
+  implementation 'org.eclipse.jetty.aggregate:jetty-all:9.4.22.v20191022'
+  implementation 'org.slf4j:slf4j-simple:1.7.29'
+}
+
+task submission(type: Zip) {
+  group = 'Submission'
+  description = 'Generates Zip archive suitable for submission to Minerva.'
+
+  archiveFileName = 'cwk2.zip'
+  destinationDirectory = project.rootDir
+
+  from("$project.rootDir") {
+    exclude 'cwk2.zip', '**/.gradle', '**/build'
+  }
+
+  doLast {
+    logger.warn("cwk2.zip generated. Don't forget to submit it!")
+  }
+}
